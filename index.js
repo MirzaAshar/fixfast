@@ -269,7 +269,8 @@ const PARENT_FOLDER_ID = "1_o-YkMJwLO0vqtNfBk96Wewyj3WQ39nc";
 // Initialize app
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://fix-fast.vercel.app" }));
 
 // Google Drive setup
 let drive;
