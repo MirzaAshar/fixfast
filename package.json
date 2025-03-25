@@ -1,0 +1,20 @@
+{
+  "name": "fix-fast",
+  "version": "1.0.0",
+  "description": "Backend for Fix Fast competition in DevDay'25",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "gcloud preview app deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammad Ashar Ali",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "googleapis": "^146.0.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
