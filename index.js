@@ -243,6 +243,9 @@ app.get("/questions", verifyToken, getQuestions);
 app.get("/protected", verifyToken, (req, res) => {
   res.send("Protected route");
 });
+app.get("/", (req, res) => {
+  res.send("Welcome to Fix Fast Backend!");
+});
 
 (async () => {
   try {
