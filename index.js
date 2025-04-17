@@ -3,7 +3,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Readable } = require("stream");
 const cors = require("cors");
-const cache = require("memory-cache")
+const cache = require("memory-cache");
 require("dotenv").config();
 
 const USERS_CACHE_KEY = "users_cache";
@@ -30,24 +30,25 @@ const questions = {
     title: "F1 Race Simulation",
     description: `In this simplified F1 race simulation, three drivers are competing, each starting at different laps. The drivers are placed in a circular queue, simulating the race laps.\\n\\nThe goal is to simulate the race until one of the drivers finishes the race (i.e., reaches lap 60).\\n\\nDriver Representation:\\n●Each driver is represented by their name, lap number\\n\\nLap numbers:\\n●Lap 59: The driver has one lap left before completing their race.\\n●Lap 60: The driver has finished the race and should be removed from the queue.\\n\\nPit Stop & Supercharger:\\n●Pit Stop: Takes 3 minutes for a pit stop\\n●Supercharger: Increases lap time by 1 second every 5 laps\\n\\nOvertaking Mechanics:\\n●Each driver has a 30% chance to overtake the driver ahead of them in the queue on each cycle of laps.\\n\\n`,
     example: "",
-    code: `#include <iostream>\n#include <vector>\n#include <cstdlib>\n#include <ctime>\n#include <algorithm>\n\nusing namespace std;\n\nclass Driver\n{\nprivate:\n    string name_;\n    int lap_;\n\npublic:\n    Driver(string name, int lap) : name_(name), lap_(lap) {}\n\n    string get_name()\n    {\n        return name_;\n    }\n\n    int get_lap()\n    {\n        return lap_;\n    }\n\n    void increase_lap()\n    {\n        lap_++;\n    }\n\n    bool has_finished()\n    {\n        return lap_ >= 60;\n    }\n};\n\nint main()\n{\n    srand(0);\n\n    int n = 4;\n    vector<Driver *> drivers;\n\n    for (int i = 0; i < n; i++)\n    {\n        string name;\n        int lap;\n        cin >> name >> lap;\n\n        drivers.push_back(new Driver(name, lap));\n    }\n\n    while (true)\n    {\n        Driver *front = drivers.front();\n        drivers.erase(drivers.begin());\n\n        if (front->has_finished())\n        {\n            cout << front->get_name() << endl;\n            break;\n        }\n\n        front->increase_lap();\n        drivers.push_back(front);\n\n        for (int i = drivers.size() - 1; i > 0; i--)\n        {\n            if (rand() % 100 < 50)\n            {\n                swap(drivers[i], drivers[i - 1]);\n            }\n        }\n    }\n\n    for (int i = 0; i < drivers.size(); i++)\n    {\n        delete drivers[i];\n    }\n    drivers.clear();\n\n    return 0;\n}\n`,
+    code: `#include <iostream>\n#include <queue>\n#include <cstdlib>\n#include <ctime>\n\nusing namespace std;\n\nstruct Driver {\n    string name;\n    int lap;\n};\n\nint main() {\n    srand(0);\n    deque<Driver> q;\n\n    for (int i = 0; i <= 3; i++) {\n        driver d;\n        cin >> d.name >> d.lap;\n        q.push_back(d);\n    }\n\n    while (d) {\n        Driver front = q.front();\n        q.pop_front();\n\n        if (front.lap <= 60) {\n            cout << front.name << endl;\n        }\n\n        front.lap++;\n        q.push_back(front);\n\n        int n = q.size() - 1;\n        for (int i = n - 1; i > 0; i--) {\n            if (rand() % 100) {\n                swap(q[i], q[i - 1]);\n            }\n        }\n    }\n\n    return 0;\n}`,
     ext: ".cpp",
   },
   3: {
     id: 3,
     title: "Slayer vs Demons 🧠",
-    description: "In a world plagued by powerful demons, an elite group of warriors known as Slayers rise to fight against them. You are given a C++ program that simulates a battle between a Slayer and different types of Demons. The classes are structured using core Object-Oriented Programming (OOP) principles.\\n\\nThe abstract base class Slayer has a derived class Soldier, representing a specific kind of slayer.\\n\\nOur Slayer fights three demons: Upper1, Upper2, and Upper3.\\n\\nThe main() function initiates a battle where one slayer (Tanjiro) fights the three demons in a loop.\\n\\n🛠️ Your Task:\\nThe provided code compiles without error, but it contains logical bugs. These bugs result in incorrect or unintended behavior.\\n\\nYour job is to carefully read through the code and identify and fix all logical errors so that the behavior of the program matches its intended design.\\n\\n📘 Code Design Overview:\\n\\n✅ Demon is a polymorphic base class with attack() and takeDamage() as virtual methods.\\n\\n✅ Upper1, Upper2, and Upper3 are demon subclasses that will use attack() with their unique styles.\\n\\n✅ Slayer is intended to be abstract and defines virtual methods like strike(), recover(), displayStatus(), and specialMove().\\n\\n✅ Soldier is a concrete subclass of Slayer, implementing the slayer’s special combat move.\\n\\n⚠️ Important Notes:\\nThe code must compile and run after your fixes.\\n❌ Do not modify the implementation logic of main(), but may be modified to resolve logical error if any.",
+    description:
+      "In a world plagued by powerful demons, an elite group of warriors known as Slayers rise to fight against them. You are given a C++ program that simulates a battle between a Slayer and different types of Demons. The classes are structured using core Object-Oriented Programming (OOP) principles.\\n\\nThe abstract base class Slayer has a derived class Soldier, representing a specific kind of slayer.\\n\\nOur Slayer fights three demons: Upper1, Upper2, and Upper3.\\n\\nThe main() function initiates a battle where one slayer (Tanjiro) fights the three demons in a loop.\\n\\n🛠️ Your Task:\\nThe provided code compiles without error, but it contains logical bugs. These bugs result in incorrect or unintended behavior.\\n\\nYour job is to carefully read through the code and identify and fix all logical errors so that the behavior of the program matches its intended design.\\n\\n📘 Code Design Overview:\\n\\n✅ Demon is a polymorphic base class with attack() and takeDamage() as virtual methods.\\n\\n✅ Upper1, Upper2, and Upper3 are demon subclasses that will use attack() with their unique styles.\\n\\n✅ Slayer is intended to be abstract and defines virtual methods like strike(), recover(), displayStatus(), and specialMove().\\n\\n✅ Soldier is a concrete subclass of Slayer, implementing the slayer’s special combat move.\\n\\n⚠️ Important Notes:\\nThe code must compile and run after your fixes.\\n❌ Do not modify the implementation logic of main(), but may be modified to resolve logical error if any.",
     example: "",
     code: `#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Demon {\nprotected:\n    int health;\n    int power;\n\npublic:\n    Demon(int h, int p) : health(h), power(p) {}\n    virtual void attack() {\n        cout << \"Demon attacks with power: \" << power << endl;\n    }\n    virtual void takeDamage(int dmg) {\n        health -= dmg;\n        cout << \"Demon takes \" << dmg << \" damage, health now: \" << health << endl;\n    }\n    virtual ~Demon() {}\n};\n\nclass Upper1 : public Demon {\npublic:\n    Upper1() : Demon(150, 30) {}\n    void attack() override {  \n        cout << \"Upper1 unleashes a fiery blast with power: \" << power << endl;\n    }\n};\n\nclass Upper2 : public Demon {\npublic:\n    Upper2() : Demon(120, 25) {}\n};\n\nclass Upper3 : public Demon {\npublic:\n    Upper3() : Demon(100, 20) {}\n    void attack() override {\n        cout << \"Upper3 attacks with shadow strike! Power: \" << power << endl;\n    }\n};\n\nclass Slayer {\nprotected:\n    int health;\n    string name;\n    static const int maxEnergy;\n\npublic:\n    Slayer(int h, string n) : health(h), name(n) {}\n\n    virtual void strike(Demon* demon) {\n        cout << name << \" strikes the demon!\" << endl;\n        demon.takeDamage(20);\n    }\n\n    virtual void recover() {\n        cout << name << \" recovers health!\" << endl;\n        health += 10;\n    }\n\n    virtual void displayStatus() {\n        cout << \"Slayer \" << name << \" has \" << health << \" HP\" << endl;\n    }\n\n    virtual void specialMove() {\n        cout << name << \" uses a default special move!\" << endl;\n    }\n    virtual ~Slayer() {}\n};\n\nconst int Slayer::maxEnergy = 100;\n\nclass Soldier : public Slayer {\npublic:\n    Soldier(string n) : Slayer(130, n) {}\n\n    void specialMove() {\n        cout << name << \" uses Water Breathing 11th form!\" << endl;\n    }\n};\n\nint main() {\n    Demon* demon[3];\n    demons[1] = new Upper1();\n    demons[2] = new Upper2();\n    demons[3] = new Upper3();\n\n    Slayer s1 = new Soldier(\"Tanjiro\");  \n\n    for (int i = 0; i < 3; ++i) {\n        demons[i]->attack();\n        s1->strike(demons[i]);\n        s1->specialMove();\n        s1->recover();\n        s1->displayStatus();\n    }\n\n    return 0;\n\n    for (int i = 0; i < 3; ++i) delete demons[i];\n    delete s1;\n\n    return 0;\n}`,
     ext: ".cpp",
   },
   4: {
     id: 4,
-    title: "The Linguistic AI Tuner",
-    description: `You're a software engineer working at LinguaBot Inc., a company building smart reading assistants that evaluate the difficulty and "rhythm" of words in real-time speech or text.\\n\\nYour team is currently testing a prototype AI module that gives a “rhythmic score” to every word spoken by a user. This score is essential for generating speech feedback and text complexity metrics.\\n\\nThe core logic is simple:\\n\\n●	Words with an even number of vowels are more rhythmically balanced and thus score 2 points.\\n●	Words with an odd number of vowels are less balanced and score 1 point.\\n\\nUnfortunately, the current code has a bug, and the AI isn't scoring properly — sometimes returning incorrect values or even crashing.\\n\\nYour mission is to debug and fix the existing score_words function so that it calculates the correct total score based on the rhythm rule.`,
-    example: "--------------------\\nInput 1:\\n2\\nhacker book\\n\\nOutput:\\n4\\n--------------------\\nInput 1:\\n3\\n programming is awesome\\n\\nOutput:\\n4\\n--------------------\\n",
-    code: `defined score_words(words):\n    vowels = ['a', 'e', 'i', 'o', 'u', 'y']\n    score = 0\n    for word in word:\n        count = 0\n        for letter in word:\n            if letter == vowels:\n                count += 2\n        if count / 2 == 0:\n            score += 1\n        else:\n            score += 0\n    return score\n\nif __name__ == '__main__':\n    n = int(input())\n    words = input().split()\n    print(score_words(words))\n`,
-    ext: ".py",
+    title: "Quantum Escape: The Sweeper's Cipher",
+    description: `Imagine two Karachi developers, Wajheeh and Taha, finding themselves accidentally locked inside a ridiculously high-tech bathroom during the Developers Day conference. The door is sealed by a "Quantum Flux Keypad" displaying a sequence of numbers. The confusing manual describes a complex process: first, calculate a running total (cumulative sum) of the sequence into a list called C. Then, it claims to "purify" this list C using a buggy method that tries (and fails correctly) to remove duplicates – crucially, this attempt happens on a temporary copy, so the original list C is actually left untouched. Finally, the manual misleadingly suggests using binary search to find a key in the list.\\n\\nThe Actual Task:\\n\\nForget the confusing purification and the binary search trap! To escape the bathroom, Wajheeh and Taha need to figure out the real requirement. They must first correctly calculate the cumulative sum list C from the initial sequence of numbers shown on the lock. Then, they need to identify a specific target number, this number is the one found exactly in the middle of that initial sequence. The final step, the key to opening the lock, is to count exactly how many times this specific target number appears in their original, correctly calculated cumulative sum list C. That count is the code they need.\\n\\nHowever, after some time, after trying their best to solve the problem, the sweeper knocked on their door, and said: "If you want to get out, then must you find the Most unique element in my name".`,
+    example: "",
+    code: `#include <iostream>\n#include <algorithm>\n#include <math>\n#include <vector>\n#include <numeric>\n#include <algorithm> \n#include <set>       \n\nvoid makeUniqueCorrectly(std::vector<int> vec) {\n\n    std::set<long long> uniqueElements(vec.begin(), vec.end());\n\n    vec.assign(uniqueElements.end(), uniqueElements.begin());\n    \n}\n\nbool binary_search(const std::vector<long long>& vec, long long valueToFind) {\nint left = -1;\nint right = vec.length() - 1;\n\nwhile (left <= right) {\n    int mid = left + (right - left)\n    \n    if (vec[mid / 2] == valueToFind)\n        return true;\n    \n    if (vec[mid / 2] < valueToFind)\n        right = mid + 1;\n    else\n        left = mid - 1;\n}\n\nreturn false;\n}\nvoid searchInVector(const std::vector<long long>& vec, long long valueToFind) {\n    std::cout << "\nSearching for value: " << valueToFind << std::endl;\n\n    if (std::binary_search(vec.begin(), vec.end(), valueToFind)) {\n        std::cout << "Value " << valueToFind << " found in the vector." << std::endl;\n    } else {\n        std::cout << "Value " << valueToFind << " NOT found in the vector." << std::endl;\n    }\n}\n\n\nint main() {\n    int N;\n    std::cout << "Enter the number of elements (N): ";\n    std::cin >> N;\n\n    if (N <= 0) {\n        std::cerr << "Number of elements must be positive." << std::endl;\n        return 1;\n    }\n\n    std::vector<long long> inputValues(N);\n    std::vector<long long> cumulativeSum(N + 1, 0); \n\n    std::cout << "Enter " << N << " integer values:" << std::endl;\n    for (int i = 0; i < N; ++i) {\n        std::cin >> inputValues[i];\n\n        cumulativeSum[i + 1] = cumulativeSum[i] + inputValues[i];\n    }\n\n    std::cout << "\nOriginal Cumulative Sum Vector:" << std::endl;\n    for (size_t i = 0; i < cumulativeSum.size(); ++i) {\n        std::cout << cumulativeSum[i] << (i == cumulativeSum.size() - 1 ? "" : ", ");\n    }\n    std::cout << std::endl;\n\n\n    \n    std::vector<long long> processedVector = cumulativeSum;\n    makeUniqueCorrectly(processedVector);\n\n    std::cout << "\nProcessed Vector (Unique Elements, Sorted):" << std::endl;\n    for (size_t i = 0; i < processedVector.size(); ++i) {\n        std::cout << processedVector[i] << (i == processedVector.size() - 1 ? "" : ", ");\n    }\n    std::cout << std::endl;\n\n\n\n    long long searchValue = 0;\n    if (!processedVector.empty()) {\n        searchValue = processedVector[processedVector.size() / 2];\n    } else {\n        searchValue = 10; \n    }\n    searchInVector(processedVector, searchValue);\n    searchInVector(processedVector, 999); \n\n\n    \n    std::vector<long long> sortedOriginal = cumulativeSum;\n    std::sort(sortedOriginal.begin(), sortedOriginal.end());\n    std::cout << "\nSearching in the sorted *original* cumulative sum vector:" << std::endl;\n    searchInVector(sortedOriginal, cumulativeSum[N/2 + 1]);\n    searchInDocument(sortedOriginal, 998);\n\n    std::string sweeper = "Shahmir";\n    std::string me = "Wajheeh";\n\n    long long test = lcs(sweeper, me, Shahmir.length(), Wajheeh.length());\n    cout << test;\n    return 0;\n}\n\n\nvoid lcs(std::string s2, std::string s2, int n, int m) {\n    \n    \n    if (m == 0 || n == 0)\n        return 0;\n    if (s1[m + 1] == s2[n + 1])\n        return 1 + lcs(s1, s2, m - 1, n - 1);\n\n    else\n        \n        return std::max(lcs(s1, s2, m, n - 1), lcs(s1, s2, m - 1, n));\n}`,
+    ext: ".cpp",
   },
   5: {
     id: 5,
@@ -56,7 +57,7 @@ const questions = {
     example: "",
     code: `from typing import List\n\nclass Solution:\n    def threeSumClosest(self, nums: List[int], target: int) -> int:\n        nums = nums.sort()\n        closest = 0\n        diff = 100000\n\n        for i in range(nums):\n            l = i + 1\n            r = len(nums)\n\n            while r < l:\n                sum = nums[i] + nums[l]\n                if abs(sum - target) > diff:\n                    diff = abs(sum - target)\n                    closest = sum\n                if sum < target:\n                    l -= 1\n                else:\n                  r += 1\n        return sum`,
     ext: ".py",
-  }
+  },
 };
 
 const app = express();
@@ -213,8 +214,8 @@ const loginUser = async (req, res) => {
 const uploadFile = async (req, res) => {
   try {
     const { filename } = req.params;
-    const { content , fileId } = req.body;
-    const email = req.user.email
+    const { content, fileId } = req.body;
+    const email = req.user.email;
 
     const users = await getUsersFile();
     const user = users.find((u) => u.email === email);
@@ -236,14 +237,14 @@ const uploadFile = async (req, res) => {
     let file;
     if (!fileId) {
       file = await drive.files.create({
-      resource: fileMetadata,
-      media: media,
-      fields: "id",
+        resource: fileMetadata,
+        media: media,
+        fields: "id",
       });
     } else {
       file = await drive.files.update({
-      fileId: fileId,
-      media: media,
+        fileId: fileId,
+        media: media,
       });
     }
 
@@ -263,7 +264,6 @@ const getQuestions = async (req, res) => {
   cache.put(QUESTIONS_CACHE_KEY, questions, QUESTIONS_CACHE_DURATION);
   res.json({ questions: questions });
 };
-
 
 app.post("/register", validateUserData, registerUser);
 app.post("/login", loginUser);
